@@ -1,0 +1,640 @@
+---
+title: "Intro to programming"
+author: "Miroslava Guerrero"
+date: "2026-05-20"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Introduction to RStudio
+
+R can be used as a base for learning programming techniques. While working on RStudio one can work on R scripts and can be saved in a working directory.
+
+To check the working directory.
+
+```{r working directory}
+getwd()
+```
+
+RStudio can solve commands after running the code. Additionally, adding comments to the codes will make it easier to remember what it is used for. Comments can be made by using # and will not affect the code.
+
+Commands will also need to be finished, otherwise they will be marked with an error outlining the issue. For instance:
+
+6* will show an error, as it is an unfinished command
+6%2 will show a syntax error
+
+```{r simple commands}
+1+2
+1:30 # makes a sequence of numbers
+```
+
+### Variables and assignment
+
+This will allow us to understand how data is stored in RStudio.
+
+The assignment operator (<-) can be used to assign a value to an object. The Python equivalent (=) can also be used in RStudio but the initial one is preferred.
+
+Though a few rules have to be kept in mind:
+- When naming an object it cannot have numbers or special symbols (incl. spaces) at the beginning
+- Object names are case sensitive
+
+Some error examples:
+01_age <- 25 (starts with number)
+!_age <- 25 (no special symbols)
+age bob <- 25 (no spaces)
+Age <- 41 (cases matter)
+'age bob' <- 25 (no spaces, but with back ticks works) 
+
+When extra detail is needed in the title, the use of underscores or hyphens is encouraged when possible. For example age_in_years or age_yrs better than age.
+
+```{r assignment operator}
+age <- 25
+first_name <- 'Bill'
+
+age+1
+age+age
+
+# EXERCISE
+A <- 15+25.1+20.25
+B <- 98
+A + B
+```
+
+### Functions
+
+Built-in functions allow many things, ranging from simple things like rounding, sampling or reporting things.
+
+Some examples of functions allow to round up and down, including up to how many decimal places that number should be round up to. 
+
+```{r functions}
+years_old <- 25.7
+round(years_old) #rounds up
+floor(years_old) #rounds down
+years_old <- 25.765
+round(years_old, 2) #comma after object to specify argument
+```
+
+To discover what each function does and how to use it the following code can be used. Using the function round as an example.
+
+```{r args}
+?round #goes to help
+args(round) #args in the Console
+```
+
+Exercise using the function paste to construct a sentence,
+
+```{r paste }
+?paste # goes to help
+years_old_2 <- 26
+Miroslava_age <- paste("Miroslava is", years_old_2, "years old")
+Miroslava_age
+```
+
+### Debugging
+
+Being able to read code is the best way to fix errors. These errors should be fixed as one goes along. Additionally, the ability of reading code, allows predicting the behaviour of the code before it has been run.
+
+For example this issue is presented if the programming language is treated as an excel spreadsheet.
+
+```{r debugging problem}
+grade <- 55
+total <- grade +10
+print(total)
+grade <- 90
+print(total) # value of total in a spreadsheet will be 100, but in programming a variable holds the value it was assigned (65)
+```
+
+Which can be fixed by the following code.
+
+```{r debugging solve}
+total <- grade+10
+print(total) # executed in the way it was defined
+```
+
+One should aim to predict the behaviour of the code before running it. For example, what would the following code do?
+
+```{r predicting}
+p <- 2
+z <- 5
+out <- p*z # there was an a instead of z #error due to undefined variable
+out <- p*z #fixed error #value is expected to be 10
+print(out) #expectation is met
+```
+
+Error report often give a hint to help understand what is going on. These errors can then be looked up on Google or StackOverflow.
+
+Testing out functions is also a good idea to test your results will do what they are supposed to, and ensures the variable is the right type. For example:
+
+```{r test functions}
+x <- 1
+is.character(x) #states that it is not a character
+is.numeric(x) #states that it is numeric
+```
+
+The following exercise is used to figure out what is wrong with the code given by identifying and commenting on the nature of the problem. *Note that the problems have been fixed.
+
+```{r exercise}
+my_quiz <- c("uno",
+             "dos",
+             "tres",
+             "cuatro", #comma is missing
+             "cinco") #function names characters
+print (my_quiz) #misspelled 'quiz'. prints out result
+str(my_quiz) # shows its a character variable and sequence
+length(my_quiz) #function len does not exist. should be length.
+```
+
+### Data types
+
+Understanding the data types is vital and will help in a range of different areas. There are built-in functions to examine objects, it includes the following:
+class() - type of object it is
+typeof() - object's data type
+length() - length of the object
+attributes() - detects metadata presence
+
+There are six basic data types, with the top four being the most important ones; Character, numeric, integer, logical, complex and raw.
+
+The following shows examples of the top four data types.
+
+```{r data type examples}
+AA <- 9
+class(AA) #numeric 
+
+Name <- 'Miroslava'
+class(Name) #character
+
+BB <- 1:5
+class(BB) #integer
+
+x=1
+y=2
+CC <- y>x
+class(CC) #logical
+```
+
+### Data structures
+
+Data structures can be formed by combining elements of data types. The following are the different types of data structures:
+- atomic vector
+- list
+- matrix
+- data frame
+- factors
+
+With vectors being the most common data type, these are a collection of elements most commonly of the type. Also note that elements inside the vectors need to be of the same type. For instance:
+
+```{r vector}
+y <- c(1,2,3) # make vector with three elements in it
+z <- c('sarah','tracy','john') #vector full of character elements
+
+# Interrogating the type of character vector results:
+class(z) # character
+class(y) #numeric
+```
+
+Lists on the other hand allow values inside them to be of several different types. For example:
+
+```{r list}
+x <- list(1, 'a', TRUE)
+x
+x[[2]] # retrieve individual elements using double square brackets to reference their index
+```
+
+### Data frames and tibbles
+
+They are two-dimensional or rectangular data files. Data frames are like spreadsheets, storing data in the same format as excel, with rows and columns. Columns hold elements of the same type.
+
+The following is an example of how to make a data frame:
+
+```{r data frame}
+# making data.frame
+my_dataframe <-data.frame(no=c(1,2,3), c('tracey', 'john', 'pete'), c(TRUE, FALSE, TRUE))
+my_dataframe
+str(my_dataframe) # R makes guess at type of data of each column
+```
+
+Sometimes the guess R makes at what type of data we have is not what we want. In this instance we want to change 'no' from numeric to a factor. 
+
+Factor is a categorical type, this will tell R that the first column is actually storing a category rather than a real continuous number. This can be changed as follows:
+
+```{r as.factor}
+my_dataframe$no = as.factor(my_dataframe$no) # to change from numeric to factor
+str(my_dataframe)
+```
+
+### Packages and libraries
+
+They are a collection of functions made for a specific purpose which can be downloaded and used.
+
+To download a package the following code is used. in this case with tidyverse as an example:
+
+install.packages('tidyverse')
+
+Once installed, there is no need to re-install again. To load the package it can be as followed. Tidyverse also has a range of other packages within it that can be used.
+
+```{r libraries}
+library(tidyverse) # load into current workspace
+library(ggplot2)
+?ggplot2 #creates elegant data visualisations using the grammar of graphics
+```
+
+# Introduction to ggplot2
+
+This workshop intends
+
+```{r packages, warning=FALSE}
+library(tidyverse) #loads necessary libraries
+mpg #built-in data frame found in ggplot2
+```
+
+The following graph will display a negative relationship between engine size and fuel efficiency.
+
+```{r first graph}
+ggplot(data=mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy)) #'displ' is size of the engine, 'hwy' the fuel efficiency
+```
+
+ggplot(data = mpg ) creates an empty graph. Adding the function geom_point() adds a layer of points to the plot, this argument is always paired with aes(), while the arguments 'x' and 'y' within it specify the variables to map in each axis.
+
+
+### Grammar of graphics
+
+Using a template will improve the development of plots when using ggplot2.
+geom functions with a collection of mappings will dictate how the plot looks.
+
+The following template supports the development of the foundations of data visualization. Complexity can be added to more advanced visualizations.
+
+ggplot(data = <DATA>) + <GEOM_FUNCTION>(mapping = aes(<MAPPINGS>))
+
+```{r basic mapping}
+ggplot() #creates an empty plot window
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy)) #adds data and axis
+```
+
+### Aesthetic mappings
+
+Aesthetic variables such as size, shape, and colour can be added to the already plotted objects.
+
+Information about the plot can be conveyed through the applied aesthetics. This can be done by naming the aesthetic variable inside aes().
+
+For instance changing colour by class.
+
+```{r colour by class}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy, colour = class))
+
+```
+
+Changing point size by class.
+
+* Note that R will advise on what makes good data visualization.
+
+```{r size by class}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy, size = class))
+```
+
+Changing the points transparency by class
+* Warning on aesthetics.
+
+```{r transparency, message=FALSE, warning=FALSE}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy, alpha = class)) #alpha aesthetic dictates the transparency
+```
+
+Changing the point shape by class.
+* Warning on aesthetics.
+
+```{r point shape, message=FALSE, warning=FALSE}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy, shape = class))
+```
+
+Properties can also be set manually, such as a number or colour. For instance making all points red.
+
+```{r all red}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy, colour = "red"))
+```
+
+However this does not show anything about the nature of the plotted variable.
+
+Additional aesthetics that can be set manually include:
+- Name of a colour as a character string.
+- Size of a point in mm.
+- Shape of point as a number.
+
+Mapping the aesthetic other than a variable name such as the following.
+
+```{r}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy, colour = displ < 5)) #displays whether engine size is larger than 5 (TRUE) or smaller than 5 (FALSE)
+```
+
+
+### Troubleshooting
+
+Being able to debug problems as you go is an essential part of coding.
+
+For instance a common problem on ggplot is having the + on the wrong place. It should always be placed at the end of the line not the start of the line.
+
+```{r plus sign}
+ggplot(data = mpg) + #should be placed here not on the following line
+  geom_point(mapping = aes(x = displ, y = hwy))
+```
+
+
+### Facet and panel plots
+
+Facets are commonly used in ggplot2 to break a single complex plot into many sub-plots (panels). 
+
+Faceting can be done by using facet_wrap(), and is in the function of a formula, where ~ dictates the variable to subset your data with.
+
+* Note: only use for discrete variables.
+
+```{r split to facets}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy)) +
+  facet_wrap(~class, nrow = 2) #nrow splits it into the set number of rows. in this case 2
+```
+
+To split into more than one variable use facet_grid(). Using ~ to split two variables.
+
+```{r multiple variable facets}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy))+
+  facet_grid(drv ~ cyl)
+```
+
+Using a . to not facet in the rows or column dimension.
+
+```{r}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy))+
+  facet_grid(. ~ cyl)
+```
+
+### Fitting simple lines
+
+A variety of visual objects can be used to represent your data. The geom object in the plot will represent the data, which can be changed through the geom function on the plot template.
+
+For instance displaying data as points.
+
+```{r data as points}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy))
+```
+
+However, ggplot can use different geom objects to represent the data. For example:
+- Bar plots - geom_bar()
+- Histogram - geom_histogram()
+- Line charts - geom_line()
+- Boxplots - geom_boxplot()
+
+Now we'll display the data as a smooth line.
+
+```{r}
+ggplot(data = mpg) +
+  geom_smooth(mapping = aes(x = displ, y = hwy))
+```
+
+Additionally, the line type can be changed, by using a variable to control it.
+
+```{r separate cars into different drv}
+ggplot(data = mpg) +
+  geom_smooth(mapping = aes(x = displ, y = hwy, linetype = drv, colour = drv))
+```
+
+This plot separates the cars into three lines based on their 'drv' which is their front wheel, rear wheel or 4wd value.
+
+Moreover, objects can be grouped by categorical variables like species, sex or site by using the group argument.
+
+```{r group by categorical variables}
+ggplot(data = mpg) +
+  geom_smooth(mapping = aes(x = displ, y = hwy, group = drv, colour = drv),
+              show.legend = FALSE)
+```
+
+Additionally, ggplot2 can be used to making plots with multiple geoms by adding them together.
+
+```{r multiple geoms}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy))+
+  geom_smooth(mapping = aes(x = displ, y= hwy))
+```
+
+While this works well, both geom lines are a duplicate. Therefore, if one of the variables wants to be changed, it will have to be done in multiple locations.
+
+This would not be ideas as it increases the chances of making an error. This can be fixed by making global mappings applied to every subsequent geom.
+
+```{r global mappings}
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) +
+  geom_point()+
+  geom_smooth()
+```
+
+Mappings can still be used to reduce duplication in code, which is useful for making changes in point styles. They can be used in specific layers to display different aesthetics.
+
+```{r aesthetics multiple geoms}
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) +
+  geom_point(mapping = aes(colour = class))+ # points styled by class
+  geom_smooth() # line is not
+```
+
+The filter (class = "subcompact") selects a subset of the data and only plots that subset.
+
+```{r subcompact}
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) +
+  geom_point(mapping = aes(colour = class))+
+  geom_smooth(data = filter(mpg, class =="subcompact"), se = FALSE) #filter shows only a small subset of the dataset
+```
+
+### Transformations and stats
+#### Plotting statistics
+
+The following graphs shows a higher diamond availability with higher quality cuts compared to lower quality cuts.
+
+```{r diamonds data}
+ggplot(data = diamonds)+
+  geom_bar(mapping = aes(x = cut))
+```
+
+While the diamonds data set does not contain count as a variable, bar charts, histograms and frequency polygons calculate new values to plot unlike scatter plots which use the raw values in the data set.
+
+This algorithm used to calculate new values is called statistical transformation (stat). Helps visualize data without needing to fit statistical models or summarize data sets.
+
+Both geoms and stats can be used interchangeably, just as seen below.
+
+```{r stat_count instead of geom_bar}
+ggplot(data = diamonds)+
+  stat_count(mapping = aes(x = cut))
+```
+
+#### Overriding defaults in ggplot2
+
+It is important to understand defaults and how these can also be changed as this can have implications on the results
+
+For instance default stats (counts) can be overridden by identity, which is a variable's raw value. For instance:
+
+```{r override variable}
+demo <- tribble (
+  ~ cut, ~freq,
+  "Fair", 1610,
+  "Good", 4906,
+  "Very Good", 12082,
+  "Premium", 13791,
+  "Ideal", 21551
+)
+demo
+
+ggplot(data = demo)+
+  geom_bar(mapping = aes(x = cut, y = freq), stat = "identity")
+```
+
+Default mapping can also be overridden from transformed variables to aesthetics. For instance displaying a bar chart of the proportion of total diamonds in the data set rather than the count.
+
+```{r override mapping default, warning=TRUE}
+ggplot(data = diamonds)+
+  geom_bar(mapping = aes(x = cut, y = stat(prop), group = 1))
+```
+
+#### Plotting statistical details
+
+Being transparent about uncertainties and limitations in the data is good practice.
+
+```{r statistical details}
+ggplot(data = diamonds)+
+  stat_summary(
+    mapping = aes(x = cut, y = depth),
+    fun.min = min,
+    fun.max = max,
+    fun = median
+  )
+```
+
+### Aesthetic adjustments
+
+Using commands like colour or fill to change the aspect of bar colours can boost the way information is conveyed.
+
+```{r colour bar}
+ggplot(data = diamonds)+
+  geom_bar(mapping = aes(x = cut, colour = cut))
+ggplot(data = diamonds)+
+  geom_bar(mapping = aes(x = cut, fill = cut))
+```
+
+Now using the variable clarity.Which is done with a position argument.
+
+Making position arguments allows to customize plots. For instance using 'identity' for raw data, 'fill' changes heights, and 'dodge' forces ggplot to not stack things on top of each other.
+
+By using position = "identity, objects can be placed exactly where it falls in the context of the graph. This is important for scatter plots but in bar plots it shows too much information.
+
+```{r variable clarity}
+ggplot(data = diamonds)+
+  geom_bar(mapping = aes(x = cut, fill = clarity))
+```
+
+```{r transparency and outline bar}
+ggplot(data = diamonds, mapping = aes(x = cut, fill = clarity))+
+  geom_bar(alpha = 1/5, position = "identity") # alters transparency
+
+ggplot(data = diamonds, mapping = aes(x = cut, colour = clarity))+
+  geom_bar(fill = NA, position = "identity") #colours bar outlines with no colour fill.
+
+```
+
+```{r postition fill}
+ggplot(data = diamonds)+
+  geom_bar(mapping = aes(x = cut, fill = clarity), position = "fill") # works like staking but all bars are at the same height.
+```
+
+```{r position dodge}
+ggplot(data = diamonds)+
+  geom_bar(mapping = aes(x = cut, fill = clarity), position = "dodge") #places objects beside one another
+```
+
+```{r position jitter}
+ggplot(data = mpg)+
+  geom_point(mapping = aes(x = displ, y = hwy), position = "jitter") #adds some random noise to each point, avoiding over-plotting with overlapping points
+```
+
+
+### Layered grammar of graphics
+
+Updated ggplot2 template for making plots.
+
+ggplot(data = <DATA>) +
+  <GEOM_FUNCTION>(
+  mapping = aes(<MAPPINGS>), 
+  stat = <STAT>, 
+  position = <POSITION>) +
+  <FACET_FUNCTION>
+  
+
+# WORKSHOP 3
+
+```{r running code from script}
+source("../MB5370/Module_01.R")
+```
+
+```{r github credantials}
+credentials::git_credential_ask()
+usethis::git_sitrep()
+usethis::create_github_token() # create token
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
