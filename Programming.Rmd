@@ -9,7 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Introduction to RStudio
+# Workshop 1 -Introduction to RStudio
 
 R can be used as a base for learning programming techniques. While working on RStudio one can work on R scripts and can be saved in a working directory.
 
@@ -241,7 +241,7 @@ library(ggplot2)
 ?ggplot2 #creates elegant data visualisations using the grammar of graphics
 ```
 
-# Introduction to ggplot2
+# Workshop 2 - Introduction to ggplot2
 
 This workshop intends
 
@@ -335,7 +335,6 @@ ggplot(data = mpg) +
   geom_point(mapping = aes(x = displ, y = hwy, colour = displ < 5)) #displays whether engine size is larger than 5 (TRUE) or smaller than 5 (FALSE)
 ```
 
-
 ### Troubleshooting
 
 Being able to debug problems as you go is an essential part of coding.
@@ -346,7 +345,6 @@ For instance a common problem on ggplot is having the + on the wrong place. It s
 ggplot(data = mpg) + #should be placed here not on the following line
   geom_point(mapping = aes(x = displ, y = hwy))
 ```
-
 
 ### Facet and panel plots
 
@@ -383,6 +381,7 @@ ggplot(data = mpg) +
 A variety of visual objects can be used to represent your data. The geom object in the plot will represent the data, which can be changed through the geom function on the plot template.
 
 For instance displaying data as points.
+
 
 ```{r data as points}
 ggplot(data = mpg) +
@@ -575,7 +574,7 @@ ggplot(data = <DATA>) +
   <FACET_FUNCTION>
   
 
-# WORKSHOP 3
+# Workshop 3- Git and GitHub
 
 ```{r running code from script}
 source("../MB5370/Module_01.R")
@@ -588,53 +587,332 @@ usethis::create_github_token() # create token
 ```
 
 
+# Workshop 4 - The Developer's Toolbox & AI
 
+This Workshop was about integrating AI into your coding workflow throguh the use of GitHub Copilot and the chattr package.
 
+### GitHub Copilot (Inline Autocomplete)
+GitHub Copilot functions as a text-prediction engine.
 
+### AI-Driven data visualisation challenge
+Instead of writing the code manually, the goal is to practice using inline text comments to guide Copilot into building code chunks.
 
+Using the Palmer Penguins dataset (palmerpenguins), records biological and environmental metrics for three penguin species in the Palmer Archipelago, Antarctica.
 
+#### Prepare Workspace
 
+```{r load libraries}
+library(tidyverse)
+library(palmerpenguins)
 
+```
 
+#### Prompt for a multi-variable scatter plot
 
+```{r scatter plot using inline}
+# Create a ggplot scatter plot using the penguins dataset. 
+# Plot bill_length_mm on the x-axis and bill_depth_mm on the y-axis.
+# Color points by species and use geom_point with size 3.
+# Add a minimal theme and clean labels.
+ggplot(data = penguins) +
+  geom_point(mapping = aes(x = bill_length_mm, y = bill_depth_mm, colour = species), size = 3) +
+  theme_minimal() +
+  labs(x = "Bill Length (mm)", y = "Bill Depth (mm)", title = "Penguin Bill Dimensions by Species")
 
+```
 
+#### Open-ended comparative plotting
 
+To test how inline autocomplete adapts to instructions.
 
+Creating a distribution check:
+```{r test autocomplete}
+# Create a boxplot using the penguins dataset.
+# Compare the flipper_length_mm across the three penguin species.
+# Facet the data by island, using custom color palettes.
+ggplot(data = penguins) +
+  geom_boxplot(mapping = aes(x = species, y = flipper_length_mm, fill = species)) +
+  facet_wrap(~ island) +
+  scale_fill_manual(values = c("Adelie" = "lightblue", "Chinstrap" = "lightgreen", "Gentoo" = "lightpink")) +
+  theme_minimal() +
+  labs(x = "Penguin Species", y = "Flipper Length (mm)", title = "Flipper Length Distribution by Species and Island")
+```
 
+### Conversational Workspace Engine (chattr)
 
+The chattr package is fully integrated within RStudio, securely reading metadata from the active environment to provide contextual support.
 
+To do this we need to generate an API Key and Securely store it.
 
+Exercise by using this prompt "Show me how to load the built-in iris dataset and use ggplot2 to build a scatter plot of Sepal.Length versus Sepal.Width colored by Species." 
+```{r sepal length vs width}
+# Using the penguins dataset load the built-in iris dataset
+# build a scatterplot for Sepal.Length vs Sepal.Width 
+# colour the points by Species.
+ggplot(data = iris) +
+  geom_point(mapping = aes(x = Sepal.Length, y = Sepal.Width, colour = Species)) +
+  theme_minimal() +
+  labs(x = "Sepal Length", y = "Sepal Width", title = "Iris Sepal Dimensions by Species")
 
+```
 
+### Conditional Logic
 
+This is how we filter outliers, classify categorical variables, or tag environments by environmental stress limits
 
+#### Base R: if-else statements
 
+The classic base R conditional structure screens a single value at a time. 
 
+The basic anatomy uses round brackets (), for logical conditions use curly braces {} to enclose the code block that executes when the condition is met.
 
+For example:
 
+```{r if else statements}
+# Simple Example: Checking Sea Surface Temperature (SST)
+sst <- 30.2
 
+if (sst > 29.5) {
+  print("Warning: Marine heatwave threshold exceeded!")
+} else {
+  print("SST remains within baseline parameters.")
+}
 
+```
 
+#### Tidiverse Alternative: Vectorised conditionals (dplyr)
 
+Base R 'if' and 'if-else' statements are not designed to handle vectorised operations, which are common in data analysis. 
 
+#### if_else() function
 
+Allows for efficient vectorised conditional logic.
 
+```{r if_else() function}
+# Load tidyverse (if not already loaded)
+library(tidyverse)
 
+# Sample coral data
+coral_monitoring <- tibble(
+  site = c("Site_A", "Site_B", "Site_C"),
+  depth_m = c(12, 35, 8)
+)
 
+# Classify depth using if_else
+coral_monitoring <- coral_monitoring %>% 
+  mutate(zone = if_else(depth_m > 30, "Deep Reef", "Shallow Reef"))
 
+```
 
+Task: finding out what the function mutate(), and the symbol %>% do.
 
+```{r mutate and %>%}
+?mutate # adds new variables or transforms existing ones
+?`%>%` # pipe operator, allows chaining of commands in a readable way
+```
 
+#### case_when() function
 
+Allows for multiple conditions to be evaluated in a single statement. clean sequential evaluation layout using tildes ~
 
+```{r case_when() function}
+coral_monitoring <- coral_monitoring %>% 
+  mutate(reef_category = case_when(
+    depth_m < 10  ~ "Lagoon / Flats",
+    depth_m <= 30 ~ "Crest / Slope",
+    depth_m > 30  ~ "Mesophotic / Deep",
+    TRUE          ~ "Unclassified" # Catch-all remainder
+  ))
 
+```
 
+#### Task: Environmetal stress classification
 
+Write an R script that initialises a tibble
 
+```{r create tibble}
+# Create a tibble with sample SST data
+# Create a tibble named marine_stations with a salinity column with values [35, 28, 32, and 12]
+# Use pipe operator and mutate() combined with case_when() to create a new column named environment_type
+# classify values below 15 as "Estuarine", values between 15 and 30 as "Brackish", and values above 30 as "Marine"
+marine_stations <- tibble(
+  station_id = c("Station_1", "Station_2", "Station_3", "Station_4"),
+  salinity = c(35, 28, 32, 12)
+)
+marine_stations <- marine_stations %>% 
+  mutate(environment_type = case_when(
+    salinity < 15 ~ "Estuarine",
+    salinity >= 15 & salinity <= 30 ~ "Brackish",
+    salinity > 30 ~ "Marine",
+    TRUE ~ "Unclassified"
+  ))
+marine_stations
 
+```
 
+### Automation - Iterating efficiently
 
+Automation means instructing R to repeat a task across multiple items without manually copy-pasting.
 
+#### Base R: for-loops
 
+This repeats a code chunk for each element in a designated sequence. 
+
+Classic loop anatomy:
+```{r loop anatomy}
+for (year in 2020:2024) {
+  print(paste("Processing climate data for year:", year))
+}
+
+```
+
+To track real-world data, loops can iterate over file directories:
+```{r file directory loop}
+# Loop across index sequences
+transect_lengths <- c(50, 100, 25, 75)
+
+for (i in seq_along(transect_lengths)) {
+  print(paste("Transect number", i, "measures", transect_lengths[i], "metres."))
+}
+
+```
+
+### Tidyverse Alternative: Functional Programming (purrr)
+
+For-loops are a core programming construct, they also require the management of index variables (i) and explicitly set up empty 'containers' to store results.Resulting in verbose code and hidden bugs.
+
+The purrr package uses map functions, mapping a specific operation onto every item in list or vector, ensuring automatic matches to the output.
+
+Examples of functions and their expected output data type:
+- map() - Returns a flexible List sturcture
+- map_dbl() - Returns a vector of decimals/ numeric values
+- map_chr() - Returns a vector of text strings/characters
+- map_df() - Returns a combined data frame/ tibble
+
+Example to see the difference between standard for-loop and purrr equivalent. 
+
+Using a standard for-loop:
+
+```{r standard for-loop}
+site_areas <- c(144, 400, 625)
+results <- numeric(length(site_areas)) # Must build an empty container first
+
+for(i in seq_along(site_areas)) {
+  results[i] <- sqrt(site_areas[i]) # Manually manage index and assignment
+}
+
+```
+
+The purrr equivalent:
+
+```{r purrr equivalent}
+library(purrr)
+# Map directly and define your expected output type explicitly
+mapped_results <- map_dbl(site_areas, sqrt)
+
+```
+
+#### Iterating across complex groups
+combining purrr pipelines inside data frames to split analysis across separate groups:
+
+```{r iterate a summary function over split lists of data}
+# Iterate a summary function over split lists of data
+iris %>% 
+  split(.$Species) %>% 
+  map(~summary(.x))
+
+```
+
+#### Task using chattr:
+Prompt the following into the engine: "I have a list of three vectors containing fish count data. Write a for-loop to calculate the mean of each, and then show me the exact parallel way to do it using purrr's map_dbl function."
+
+```{r result of task}
+
+# Sample data: list of three vectors with fish counts
+fish_counts <- list(
+  lake1 = c(5, 6, 7, 8),
+  lake2 = c(10, 12, 14, 16),
+  lake3 = c(2, 3, 5, 7)
+)
+
+# For-loop method
+means_loop <- numeric(length(fish_counts))
+for (i in seq_along(fish_counts)) {
+  means_loop[i] <- mean(fish_counts[[i]])
+}
+means_loop
+
+# purrr's map_dbl method
+library(purrr)
+means_map <- map_dbl(fish_counts, mean)
+means_map
+```
+
+### Writing custom functions
+
+Functions package your logic into clear, named, reusable assets.
+
+#### Function construction blueprint
+
+The function consists of a Name, Arguments (input varables), and a Body (execution logic wapped inside curly braces).
+
+Always test functions in a clean local environment, ensuring they rely strictly on the arguments passed directly into them, rather than accidentally grabbing random background objects floating in global R environment.
+
+```{r function blueprint}
+# Function Definition
+calculate_coral_mortality <- function(initial_count, surviving_count) {
+  
+  # Logic safety switch using our conditional tools!
+  if (initial_count <= 0) {
+    stop("Initial count must be greater than zero.")
+  }
+  
+  mortality_rate <- (initial_count - surviving_count) / initial_count
+  return(mortality_rate)
+}
+
+# Utilizing your custom function
+calculate_coral_mortality(initial_count = 120, surviving_count = 84)
+
+```
+
+#### Excercise: Custom function construction task.
+
+```{r custom function task}
+# Build a custom function named convert_temp_c_to_f 
+# This function should accept a single argument representing temperature in Celcius.
+# The function should perform the math conversion: F = (C * 9/5) + 32
+# Include a safety check using an 'if' statement that halts execution via stop() if the entered value is below absolute zero (-273.15°C).
+# Test your function with a sample input of 25°C and then with an invalid input of -300°C to see the error handling in action.
+convert_temp_c_to_f <- function(temp_c) {
+  if (temp_c < -273.15) {
+    stop("Temperature cannot be below absolute zero (-273.15°C).")
+  }
+  
+  temp_f <- (temp_c * 9/5) + 32
+  return(temp_f)
+}
+# Test the function with valid input
+convert_temp_c_to_f(25)
+# Test the function with invalid input to see error handling
+convert_temp_c_to_f(-300)
+
+```
+
+### Advanced scripting extension challenges
+
+Challenge 1: Nested Multi-Vector Iteration
+```{r challenge 1}
+# Given a vector of raw survey counts counts <- c(15, 24, 8, 42) and a vector of species-specific scaling factors factors <- c(1.2, 0.8, 2.5, 1.1)
+# Write a mapping statement using map2_dbl()
+# The function should iterate through both vectors simultaneously, applying the scaling factor to each corresponding count.
+# Do not use a manual index loop
+library(purrr)
+counts <- c(15, 24, 8, 42)
+factors <- c(1.2, 0.8, 2.5, 1.1)
+scaled_counts <- map2_dbl(counts, factors, ~ .x
+ * .y)
+scaled_counts
+
+```
 
