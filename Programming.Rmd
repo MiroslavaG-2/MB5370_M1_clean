@@ -11,9 +11,11 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Workshop 1 -Introduction to RStudio
 
-R can be used as a base for learning programming techniques. While working on RStudio one can work on R scripts and can be saved in a working directory.
+This workshop was intended to introduce the basics of RStudio, including how to use it, how to write code, and how to debug code.
 
-To check the working directory.
+RStudio is an integrated development environment (IDE) for R, which provides a user-friendly interface for writing and running R code. This can be used as a base for learning programming techniques.
+
+The working directory is the folder where RStudio will look for files to read and where it will save files that you create. It is important to know how to check and set the working directory to ensure that you are working in the correct location. To check the working directory: 
 
 ```{r working directory}
 getwd()
@@ -243,7 +245,7 @@ library(ggplot2)
 
 # Workshop 2 - Introduction to ggplot2
 
-This workshop intends
+This workshop was intended to introduce the basics of ggplot2, which is a package used for data visualization. It is based on the grammar of graphics, which is a system for describing and building graphs.
 
 ```{r packages, warning=FALSE}
 library(tidyverse) #loads necessary libraries
@@ -576,16 +578,52 @@ ggplot(data = <DATA>) +
 
 # Workshop 3- Git and GitHub
 
-```{r running code from script}
-source("../MB5370/Module_01.R")
-```
+This workshop was intended to start using Git and GitHub to manage code and collaborate with others.
 
-```{r github credantials}
+To set up your credentials and configuring a personal access token the following was used:
+
+```{r github credantials, eval=FALSE, include=FALSE}
+# using the console 
 credentials::git_credential_ask()
 usethis::git_sitrep()
 usethis::create_github_token() # create token
 ```
 
+### Using GitHub repository
+#### cloning repo to your computer
+
+To do this a suitable folder needs to be created to store the data analysis work. The URL of the repo needs to be copied and a new project should be created in R Studio using the version control option, then Git, and then pasting the URL.
+
+#### Tracking own project
+
+Create a new folder on files and a GitHub repository on your profile. 
+
+Then create a new project in RStudio linked to GitHub. By pasting the URL of the repository that was previously created. This will allow to track the project and make changes to it.
+
+Any scrips or .Rmd files related to this project should be stored in this folder. This will allow to track the changes made to the files and share them with others.
+
+A Git window will appear with files from this project. Different symbols will appear next to these files; A (added), D (deleted), M (modified), R (renamed) and ? (untracked).
+
+#### Ignoring files with .gitignore
+
+Some files should not be tracked by Git, such as large data files, or files with sensitive information. To do this a .gitignore file needs to be created in the project folder. This file will contain the names of the files that should not be tracked by Git.
+
+
+### Working in Git and GitHub
+#### Committing changes
+To commit changes, the Git window needs to be opened and the files that have been changed need to be selected. Then a commit message needs to be written describing the changes made. Finally, the commit button needs to be clicked to save the changes.
+
+#### Pulling changes from GitHub
+To pull changes from GitHub, the Git window needs to be opened and the pull button needs to be clicked. This will download the changes from the GitHub repository to the local computer.
+
+#### Pushing changes to GitHub
+To push changes to GitHub, the Git window needs to be opened and the push button needs to be clicked. This will upload the changes to the GitHub repository.
+
+### Workflow with Git and GitHub
+
+We need to incorporate Git and GitHub with the following steps:
+
+Edit > Save > Stage > Commit > Pull > Push ... and so on.
 
 # Workshop 4 - The Developer's Toolbox & AI
 
