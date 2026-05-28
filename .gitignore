@@ -50,3 +50,7 @@ rsconnect/
 
 # Ignore Rproj file
 *.Rproj
+
+# Ignore files for website
+Programming_files/
+Programming.html
