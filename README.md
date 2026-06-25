@@ -1,1 +1,7 @@
-This repository is for coding and other work relating MB5370.
+# MB5370 – Introduction to Programming
+
+This repository contains the code, outputs, and supporting materials developed throughout _MB5370 – Introduction to Programming_. The module aims to develop foundational programming skills in R and introduce computational tools that support scientific research in the natural sciences.
+
+The repository is organised by workshop, with each workshop focusing on a different aspect of programming and data analysis. Workshop 1 introduces the RStudio environment and covers fundamental concepts including data types, data structures, data frames, and tibbles. Workshop 2 focuses on data visualisation using ggplot2, with an emphasis on creating clear and increasingly complex graphical outputs. Workshop 3 introduces GitHub and version control, highlighting the importance of reproducible workflows and collaborative project management. Workshop 4 explores the use of AI as a tool to assist with code development, debugging, and workflow efficiency.
+
+The primary aim of the code contained within this repository is educational, providing practical examples of programming techniques and workflows commonly used in scientific research. The datasets used throughout the workshops are sourced from publicly available R packages and teaching datasets provided as part of the course materials. These datasets are used to demonstrate programming concepts, data manipulation techniques, and data visualisation methods, allowing users to reproduce the analyses and gain familiarity with working in R.
