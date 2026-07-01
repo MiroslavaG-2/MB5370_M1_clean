@@ -27,7 +27,7 @@ knitr::opts_chunk$set(
 	warning = FALSE)
 ```
 
-# Workshop 1 -Introduction to RStudio 
+# Workshop 1 -Introduction to RStudio  
  
 This workshop was intended to introduce the basics of RStudio, including how to use it, how to write code, and how to debug code.
 
@@ -90,6 +90,7 @@ Built-in functions allow many things, ranging from simple things like rounding, 
 Some examples of functions allow to round up and down, including up to how many decimal places that number should be round up to. 
 
 ```{r functions}
+#| output: false
 years_old <- 25.7
 round(years_old) #rounds up
 floor(years_old) #rounds down
@@ -180,6 +181,7 @@ There are six basic data types, with the top four being the most important ones;
 The following shows examples of the top four data types.
 
 ```{r data type examples}
+#| output: false
 AA <- 9
 class(AA) #numeric 
 
@@ -207,6 +209,7 @@ Data structures can be formed by combining elements of data types. The following
 With vectors being the most common data type, these are a collection of elements most commonly of the type. Also note that elements inside the vectors need to be of the same type. For instance:
 
 ```{r vector}
+#| output: false
 y <- c(1,2,3) # make vector with three elements in it
 z <- c('sarah','tracy','john') #vector full of character elements
 
@@ -266,6 +269,7 @@ library(ggplot2)
 This workshop was intended to introduce the basics of ggplot2, which is a package used for data visualization. It is based on the grammar of graphics, which is a system for describing and building graphs.
 
 ```{r packages, warning=FALSE}
+#| output: false
 library(tidyverse) #loads necessary libraries
 mpg #built-in data frame found in ggplot2
 ```
@@ -290,6 +294,7 @@ The following template supports the development of the foundations of data visua
 ggplot(data = <DATA>) + <GEOM_FUNCTION>(mapping = aes(<MAPPINGS>))
 
 ```{r basic mapping}
+#| output: false
 ggplot() #creates an empty plot window
 ggplot(data = mpg) +
   geom_point(mapping = aes(x = displ, y = hwy)) #adds data and axis
@@ -362,6 +367,7 @@ Being able to debug problems as you go is an essential part of coding.
 For instance a common problem on ggplot is having the + on the wrong place. It should always be placed at the end of the line not the start of the line.
 
 ```{r plus sign}
+#| output: false
 ggplot(data = mpg) + #should be placed here not on the following line
   geom_point(mapping = aes(x = displ, y = hwy))
 ```
@@ -383,6 +389,7 @@ ggplot(data = mpg) +
 To split into more than one variable use facet_grid(). Using ~ to split two variables.
 
 ```{r multiple variable facets}
+#| output: false
 ggplot(data = mpg) +
   geom_point(mapping = aes(x = displ, y = hwy))+
   facet_grid(drv ~ cyl)
@@ -391,6 +398,7 @@ ggplot(data = mpg) +
 Using a . to not facet in the rows or column dimension.
 
 ```{r}
+#| output: false
 ggplot(data = mpg) +
   geom_point(mapping = aes(x = displ, y = hwy))+
   facet_grid(. ~ cyl)
@@ -424,6 +432,7 @@ ggplot(data = mpg) +
 Additionally, the line type can be changed, by using a variable to control it.
 
 ```{r separate cars into different drv}
+#| output: false
 ggplot(data = mpg) +
   geom_smooth(mapping = aes(x = displ, y = hwy, linetype = drv, colour = drv))
 ```
@@ -441,6 +450,7 @@ ggplot(data = mpg) +
 Additionally, ggplot2 can be used to making plots with multiple geoms by adding them together.
 
 ```{r multiple geoms}
+#| output: false
 ggplot(data = mpg) +
   geom_point(mapping = aes(x = displ, y = hwy))+
   geom_smooth(mapping = aes(x = displ, y= hwy))
@@ -478,6 +488,7 @@ ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) +
 The following graphs shows a higher diamond availability with higher quality cuts compared to lower quality cuts.
 
 ```{r diamonds data}
+#| output: false
 ggplot(data = diamonds)+
   geom_bar(mapping = aes(x = cut))
 ```
@@ -540,6 +551,7 @@ ggplot(data = diamonds)+
 Using commands like colour or fill to change the aspect of bar colours can boost the way information is conveyed.
 
 ```{r colour bar}
+#| output: false
 ggplot(data = diamonds)+
   geom_bar(mapping = aes(x = cut, colour = cut))
 ggplot(data = diamonds)+
@@ -561,17 +573,21 @@ ggplot(data = diamonds)+
 ggplot(data = diamonds, mapping = aes(x = cut, fill = clarity))+
   geom_bar(alpha = 1/5, position = "identity") # alters transparency
 
+#| output: false
+
 ggplot(data = diamonds, mapping = aes(x = cut, colour = clarity))+
   geom_bar(fill = NA, position = "identity") #colours bar outlines with no colour fill.
 
 ```
 
 ```{r postition fill}
+#| output: false
 ggplot(data = diamonds)+
   geom_bar(mapping = aes(x = cut, fill = clarity), position = "fill") # works like staking but all bars are at the same height.
 ```
 
 ```{r position dodge}
+#| output: false
 ggplot(data = diamonds)+
   geom_bar(mapping = aes(x = cut, fill = clarity), position = "dodge") #places objects beside one another
 ```
