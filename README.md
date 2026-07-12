@@ -1,4 +1,4 @@
-# MB5370 – Introduction to Programming
+## MB5370 – Introduction to Programming
 
 This repository contains the code, outputs, and supporting materials developed throughout _MB5370 – Introduction to Programming_. The module aims to develop foundational programming skills in R and introduce computational tools that support scientific research in the natural sciences.
 
